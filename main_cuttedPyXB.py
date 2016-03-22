@@ -7,3 +7,5 @@ from xsd  import pain_cutted
 # http://pyxb.sourceforge.net/userref_usebind.html
 # http://stackoverflow.com/questions/17584287/unable-to-bind-to-pyxb-classes-with-nested-anonymous-types
 # http://pyxb.sourceforge.net/userref_pyxbgen.html#pyxbgen
+
+# http://hanjun.me/software/2013/11/30/python_and_xsd.html
