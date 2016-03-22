@@ -33,7 +33,7 @@ Namespace.configureCategories(['typeBinding', 'elementBinding'])
 
 # custom added 
 location = 'C:\\Users\\modzelwo\\PycharmProjects\\xsd_cutted_pyxb\\xsd\\pain_cutted.xsd'
-
+# location = '/Users/wojtek/PycharmProjects/xsd_cutted_pyxb/xsd'
 
 def CreateFromDocument(xml_text, default_namespace=None, location_base=None):
     """Parse the given XML and use the document element to create a
@@ -414,8 +414,7 @@ class CustomerCreditTransferInitiationV03_CH(pyxb.binding.basis.complexTypeDefin
     _ContentTypeTag = pyxb.binding.basis.complexTypeDefinition._CT_ELEMENT_ONLY
     _Abstract = False
     _ExpandedName = pyxb.namespace.ExpandedName(Namespace, 'CustomerCreditTransferInitiationV03-CH')
-    _XSDLocation = pyxb.utils.utility.Location(
-        location, 9, 1)
+    _XSDLocation = pyxb.utils.utility.Location(location, 9, 1)
     _ElementMap = {}
     _AttributeMap = {}
     # Base type is pyxb.binding.datatypes.anyType
@@ -423,8 +422,7 @@ class CustomerCreditTransferInitiationV03_CH(pyxb.binding.basis.complexTypeDefin
     # Element {http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd}GrpHdr uses Python identifier GrpHdr
     __GrpHdr = pyxb.binding.content.ElementDeclaration(pyxb.namespace.ExpandedName(Namespace, 'GrpHdr'), 'GrpHdr',
                                                        '__httpwww_six_interbank_clearing_comdepain_001_001_03_ch_02_xsd_CustomerCreditTransferInitiationV03_CH_httpwww_six_interbank_clearing_comdepain_001_001_03_ch_02_xsdGrpHdr',
-                                                       False, pyxb.utils.utility.Location(
-            location, 11, 3), )
+                                                       False, pyxb.utils.utility.Location(location, 11, 3),)
 
     GrpHdr = property(__GrpHdr.value, __GrpHdr.set, None, None)
 
