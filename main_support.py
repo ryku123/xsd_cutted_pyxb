@@ -2,6 +2,8 @@ import pyxb
 from xsd import pain_cutted as pain
 from datetime import datetime
 import pyxb.utils.domutils
+import xml.dom.minidom
+
 import pyxb.binding.datatypes as xs
 
 # def int_to_decimal_str(integer):
@@ -20,9 +22,6 @@ import pyxb.binding.datatypes as xs
 #
 # print int_to_decimal_str(1)
 
-
-
-
 grpHdr = pain.GroupHeader32_CH()
 grpHdr.MsgId = "MSG-01"
 grpHdr.NbOfTxs = "123456789012345"
@@ -38,13 +37,7 @@ pmtinf.DbtrAcct = "PayAccount"
 pmtinf.DbtrAgt = "PayDbtrAgent"
 pmtinf.CdtTrfTxInf = ['Dupa', 'Sraka']
 
-
-
 # the default value for minOccurs is 1 -> http://www.w3schools.com/xml/schema_complex_indicators.asp
-
-
-
-
 
 
 ### OrgId ###
@@ -54,19 +47,22 @@ _orgidVal = pain.OrganisationIdentification4_CH(BICOrBEI="KBBECH22", Othr="SomeO
 # _orgidVal.BICOrBEI = "KBBECH22321"                    # tez
 # _orgidVal.Othr = "SomeOherValue"                      # dziala
 
-_orgid = pain.Party6Choice_CH(_orgidVal)  #OrgID
+_orgid = pain.Party6Choice_CH(_orgidVal)      # OrgID
 
 ### PrvtId ###
-_prvtidVal = pain.PersonIdentification5_CH()  #PrvtId
+
+_prvtidVal = pain.PersonIdentification5_CH()  # PrvtId
 _prvtidVal.Othr = "wojtek"
+_prvtidVal.DtAndPlcOfBirth = pain.DateAndPlaceOfBirth(BirthDt="2016-03-30",
+                                                      PrvcOfBirth=None,       # optional
+                                                      CityOfBirth="Stalowka",
+                                                      CtryOfBirth="CH")
 
 _prvtid = pain.Party6Choice_CH(_prvtidVal)  # super wazne! dodajesz do Id wiec musi to byc insancja klasy podrzednej!
 
 
-
-
-grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=_orgid)
-# grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=_prvtid) # wejdzie ostatni jesli w sekwencji
+# grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=_orgid)
+grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=_prvtid)  # wejdzie ostatni jesli w sekwencji
 
 # albo i tak
 # grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=pain.Party6Choice_CH(pain.OrganisationIdentification4_CH('org_bo_nie_BIC')))
@@ -74,6 +70,7 @@ grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=_orgid)
 
 # whaaat? sprawdz to
 # grpHdr.InitgPty = pain.PartyIdentification32_CH_NameAndId(Nm='nazwa', Id=pain.Party6Choice_CH(pain.PersonIdentification5_CH('other_bo_nie_date')))
+
 # or
 # grpHdr.InitgPty = pyxb.BIND('name', pyxb.BIND());
 # grpHdr.InitgPty.Id = pyxb.BIND();
@@ -103,17 +100,23 @@ doc.CstmrCdtTrfInitn = cstmrCdT
 
 
 xxx = doc.toDOM()
+domobj = xml.dom.minidom.Document()
+
+print "xxx   ", xxx.__class__
+print "domobj", domobj.__class__
+# TODO: dlaczego nie rozwia mi nazw xxx.CokoLwiek ? Pycharm nie widzi xxx jako obiektu klasy minidom.Document hmmm
+# TODO: read http://www.boddie.org.uk/python/XML_intro.html
 
 # pyxb.utils.domutils.BindingDOMSupport.addXMLNSDeclaration(element='Document', namespace=ns2)
-print "xxx", xxx.__class__
+
 # xxx.setAttribute("xmlns", "http://example.net/ns")
 # pyxb.utils.domutils.BindingDOMSupport.DeclareNamespace(pain.Namespace, 'xxx')
 
-# print xxx.toprettyxml(encoding='utf-8')
+print xxx.toprettyxml(encoding='utf-8')
 
 try:
     doc.validateBinding()
-    print doc.toDOM().toprettyxml(encoding='utf-8')
+    # print doc.toDOM().toprettyxml(encoding='utf-8')
 except pyxb.ValidationError as e:
     print(e.details())
 
