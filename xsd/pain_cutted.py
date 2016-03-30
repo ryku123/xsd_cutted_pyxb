@@ -33,7 +33,7 @@ Namespace.configureCategories(['typeBinding', 'elementBinding'])
 
 # custom added 
 # location = 'C:\\Users\\modzelwo\\PycharmProjects\\xsd_cutted_pyxb\\xsd\\pain_cutted.xsd'
-location = '/Users/wojtek/PycharmProjects/xsd_cutted_pyxb/xsd'
+location = '/Users/wojtek/PycharmProjects/xsd_cutted_pyxb1/pain_cutted.xsd'
 
 def CreateFromDocument(xml_text, default_namespace=None, location_base=None):
     """Parse the given XML and use the document element to create a
